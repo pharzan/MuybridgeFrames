@@ -15,7 +15,6 @@ class Main{
             x= new Scanner(new File(fileName));
             x.useDelimiter("[,]");
 
-            System.out.println("File Read");
             //Read file to list
             while(x.hasNextLine()){
                 lines.add(x.nextLine().split(","));
@@ -81,9 +80,57 @@ class Main{
        }
     }
 
+    public static int getVoidCount(){
+        int voidCount = 0;
+        int rows = imageData.size();
+        for(int i=0;i<rows;i++){
+            ArrayList<Integer> currentRow = imageData.get(i);
+            int cols = currentRow.size();
+            for(int j=0; j < cols; j++){
+                int currentVal = currentRow.get(j);
+                if(currentVal>0){
+                    voidCount += 1;
+                }
+            }
+        }
+        return voidCount;
+    }
+
+    public static int getSolidCount(){
+      
+        int solidCount = 0;
+        int rows = imageData.size();
+        for(int i=0;i<rows;i++){
+            ArrayList<Integer> currentRow = imageData.get(i);
+            int cols = currentRow.size();
+            for(int j=0; j < cols; j++){
+                int currentVal = currentRow.get(j);
+                if(currentVal==0){
+                    solidCount += 1;
+                }
+            }
+        }
+        return solidCount;
+    }
+    
+    public static int getTotalCellCount(){
+        return imageData.size()*imageData.get(0).size();
+    }
+
     public static void main(String args[]){  
      System.out.println("Hello Java");
-     animate(500);
+     String file = filesList[0]; //change index for file
+     readData(file); // create matrix
+
+     //  animate(500);
+     int voidCount = getVoidCount();
+     int solidCount = getSolidCount();
+     int totalCellsCount = getTotalCellCount();
+
+     System.out.println("Void Count: " + voidCount);
+     System.out.println("Void Count: " + solidCount);
+     System.out.println("Void Count: " + totalCellsCount);
+     
     }  
     
 }  
