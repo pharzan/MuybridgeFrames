@@ -82,7 +82,7 @@ class Main {
         }
     }
 
-    public static int getVoidCount(ArrayList<ArrayList<Integer>> imageData) {
+    public static int getSolidCount(ArrayList<ArrayList<Integer>> imageData) {
         int voidCount = 0;
         int rows = imageData.size();
         for (int i = 0; i < rows; i++) {
@@ -98,7 +98,7 @@ class Main {
         return voidCount;
     }
 
-    public static int getSolidCount(ArrayList<ArrayList<Integer>> imageData) {
+    public static int getVoidCount(ArrayList<ArrayList<Integer>> imageData) {
 
         int solidCount = 0;
         int rows = imageData.size();
@@ -175,6 +175,10 @@ class Main {
         }
     }
 
+    public static void similarityRatio(String firstFile, String secondFile){
+
+    }
+
     public static void main(String args[]) {
         System.out.println("Hello Java");
         String file = filesList[0]; // change index for file
@@ -189,7 +193,7 @@ class Main {
         System.out.println("Solid Count: " + solidCount);
         System.out.println("Total Count: " + totalCellsCount);
         superimposition(data);
-        compare("input02.txt", "input03.txt");
+        compare("input01.txt", "input02.txt");
     }
 
 }
