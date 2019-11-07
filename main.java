@@ -1,14 +1,14 @@
 import java.io.File;
 import java.io.IOException;
 import java.util.*;
-
+import java.util.concurrent.TimeUnit;
 class Main{
         
     public static ArrayList<ArrayList<Integer>> imageData;
+    public static String[] filesList = new String[]{"input01.txt","input02.txt","input03.txt","input04.txt","input05.txt"};
 
     public static void readData(String fileName){
         Scanner x;
-        
         List<String[]> lines = new ArrayList<String[]>();
         imageData = new ArrayList<ArrayList<Integer>>();
         try{
@@ -63,14 +63,24 @@ class Main{
     }
 
     public static void main(String args[]){  
-     System.out.println("Hello Java");  
-     System.out.print("\033[H\033[2J");  
-     System.out.flush();  
-     readData("input01.txt");
-    //  System.out.println(imageData);
-    //  System.out.println(imageData.size());
-    //  System.out.println(imageData.get(0).size());
-        draw();
+     System.out.println("Hello Java");
+     for(int i=0;i<100;i++){
+         try{
+             for(int j=0; j<filesList.length;j++){
+                 String currentFile = filesList[j];
+                 System.out.print("\033[H\033[2J");  
+                 System.out.flush();
+                 System.out.println(currentFile);  
+                 readData(currentFile);
+                 draw();
+                 TimeUnit.MILLISECONDS.sleep(100);
+             }
+
+         }catch(InterruptedException e){
+
+         }
+
+    }
     }  
     
 }  
