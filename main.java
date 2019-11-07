@@ -117,6 +117,10 @@ class Main{
         return imageData.size()*imageData.get(0).size();
     }
 
+    public static void superimposition(){
+
+    }
+
     public static void main(String args[]){  
      System.out.println("Hello Java");
      String file = filesList[0]; //change index for file
@@ -128,8 +132,8 @@ class Main{
      int totalCellsCount = getTotalCellCount();
 
      System.out.println("Void Count: " + voidCount);
-     System.out.println("Void Count: " + solidCount);
-     System.out.println("Void Count: " + totalCellsCount);
+     System.out.println("Solid Count: " + solidCount);
+     System.out.println("Total Count: " + totalCellsCount);
      
     }  
     
