@@ -62,25 +62,28 @@ class Main{
         }
     }
 
+    public static void animate(int times){
+        for(int i=0;i<times;i++){
+            try{
+                for(int j=0; j<filesList.length;j++){
+                    String currentFile = filesList[j];
+                    System.out.print("\033[H\033[2J");  
+                    System.out.flush();
+                    System.out.println(currentFile);  
+                    readData(currentFile);
+                    draw();
+                    TimeUnit.MILLISECONDS.sleep(100);
+                }
+   
+            }catch(InterruptedException e){
+   
+            }
+       }
+    }
+
     public static void main(String args[]){  
      System.out.println("Hello Java");
-     for(int i=0;i<100;i++){
-         try{
-             for(int j=0; j<filesList.length;j++){
-                 String currentFile = filesList[j];
-                 System.out.print("\033[H\033[2J");  
-                 System.out.flush();
-                 System.out.println(currentFile);  
-                 readData(currentFile);
-                 draw();
-                 TimeUnit.MILLISECONDS.sleep(100);
-             }
-
-         }catch(InterruptedException e){
-
-         }
-
-    }
+     animate(500);
     }  
     
 }  
