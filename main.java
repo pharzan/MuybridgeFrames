@@ -63,6 +63,17 @@ class Main {
         }
     }
 
+    public static void draw(int[][] imageData) {
+        for (int i = 0; i < imageData.length; i++) {
+            for (int j = 0; j < imageData[i].length; j++) {
+                System.out.print(imageData[i][j]);
+            }
+            System.out.print("\n");
+        }
+
+        System.out.print("----end \n");
+    }
+
     public static void animate(int times) {
         for (int i = 0; i < times; i++) {
             try {
@@ -137,12 +148,7 @@ class Main {
                 }
             }
         }
-        for (int i = 0; i < result.length; i++) {
-            for (int j = 0; j < result[i].length; j++) {
-                System.out.print(result[i][j]);
-            }
-            System.out.print("\n");
-        }
+        draw(result);
 
     }
 
@@ -167,15 +173,19 @@ class Main {
                 }
             }
         }
-        for (int i = 0; i < result.length; i++) {
-            for (int j = 0; j < result[i].length; j++) {
-                System.out.print(result[i][j]);
-            }
-            System.out.print("\n");
-        }
+        draw(result);
     }
 
-    public static void similarityRatio(String firstFile, String secondFile){
+    public static void compareAll() {
+        System.out.println("Compare Start...");
+
+        for (int i = 0; i < filesList.length - 1; i++) {
+            compare(filesList[i], filesList[i + 1]);
+        }
+        System.out.println("Compare END...");
+    }
+
+    public static void similarityRatio(String firstFile, String secondFile) {
 
     }
 
@@ -193,7 +203,7 @@ class Main {
         System.out.println("Solid Count: " + solidCount);
         System.out.println("Total Count: " + totalCellsCount);
         superimposition(data);
-        compare("input01.txt", "input02.txt");
+        compareAll();
     }
 
 }
