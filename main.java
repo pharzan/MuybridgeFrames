@@ -182,7 +182,7 @@ class Main {
                 }
             }
         }
-        draw(result);
+        // draw(result);
         return result;
     }
 
@@ -205,14 +205,39 @@ class Main {
     }
 
     public static void similarityRatio(String firstFile, String secondFile) {
+
         ArrayList<ArrayList<Integer>> firstFileData = readData(firstFile);
+        ArrayList<ArrayList<Integer>> secondFileData = readData(secondFile);
+
         int firstFileSolidCount = getSolidCount(firstFileData);
         int firstFileTotal = getTotalCellCount(firstFileData);
-        float ratio = (float) firstFileSolidCount / (float) firstFileTotal;
-        System.out.println(ratio);
-        System.out.println(ratio * 100);
+        float solidPerA = ((float) firstFileSolidCount / (float) firstFileTotal);
+        int secondFileSolidCount = getSolidCount(secondFileData);
+        int secondFileTotal = getTotalCellCount(secondFileData);
+        float solidPerB = ((float) secondFileSolidCount / (float) secondFileTotal);
+        // System.out.println(ratio);
+        // System.out.println(ratio * 100);
+        float sum = ifChange(firstFile, secondFile);
+        double similarityRatio = (((float)solidPerB * 100) / (float)solidPerA) - ((float)sum * 0.75);
+        System.out.println("Similarity: "+firstFile +" and "+ secondFile +" = "+ similarityRatio);
 
         // System.out.println(firstFileTotal);
+
+    }
+
+    public static float ifChange(String file1, String file2) {
+        int[][] result = compare(file1, file2);
+        int sum = 0;
+        for (int i = 0; i < result.length; i++) {
+
+            for (int j = 0; j < result.length; j++) {
+                if (result[i][j] == 1) {
+                    sum += 1;
+                }
+            }
+        }
+
+        return (float)sum/750;
 
     }
 
@@ -247,7 +272,10 @@ class Main {
 
         System.out.println("Question 4:");
 
-        similarityRatio("input01.txt", "input02.txt");
+        similarityRatio("input02.txt", "input01.txt");
+        similarityRatio("input03.txt", "input01.txt");
+        similarityRatio("input04.txt", "input01.txt");
+        similarityRatio("input05.txt", "input01.txt");
 
     }
 
