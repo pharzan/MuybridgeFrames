@@ -14,15 +14,18 @@ class Main {
         ArrayList<ArrayList<Integer>> imageData = new ArrayList<ArrayList<Integer>>();
         try {
             x = new Scanner(new File(fileName));
-            x.useDelimiter("[,]");
+            // x.useDelimiter("[,]");
 
             // Read file to list
             while (x.hasNextLine()) {
                 lines.add(x.nextLine().split(","));
             }
-            ArrayList<Integer> list = new ArrayList<Integer>();
-            int j = 0;
+            // System.out.println(lines);
+
+            // ArrayList<Integer> list = new ArrayList<Integer>();
+            int j;
             // Convert to number
+
             for (int i = 0; i < lines.size(); i++) {
                 String[] objArr = (String[]) lines.get(i);
                 imageData.add(new ArrayList<Integer>());
@@ -32,11 +35,12 @@ class Main {
                         j += 1;
                         int val = Integer.parseInt(obj.trim());
                         imageData.get(i).add(val);
-                        list.add(i, val);
+                        // list.add(i, val);
                         // System.out.println(val);
 
                     } catch (NumberFormatException e) {
                         // DO Nothing if not a number
+
                     }
                 }
             }
@@ -66,12 +70,11 @@ class Main {
     public static void draw(int[][] imageData) {
         for (int i = 0; i < imageData.length; i++) {
             for (int j = 0; j < imageData[i].length; j++) {
-                System.out.print(imageData[i][j]);
+                System.out.print(" " + imageData[i][j]);
             }
             System.out.print("\n");
         }
 
-        System.out.print("----end \n");
     }
 
     public static void animate(int times) {
@@ -94,19 +97,19 @@ class Main {
     }
 
     public static int getSolidCount(ArrayList<ArrayList<Integer>> imageData) {
-        int voidCount = 0;
-        int rows = imageData.size();
+        int solidCount = 0;
+        int rows = imageData.size(); // get the number of rows
         for (int i = 0; i < rows; i++) {
             ArrayList<Integer> currentRow = imageData.get(i);
             int cols = currentRow.size();
             for (int j = 0; j < cols; j++) {
                 int currentVal = currentRow.get(j);
                 if (currentVal > 0) {
-                    voidCount += 1;
+                    solidCount += 1;
                 }
             }
         }
-        return voidCount;
+        return solidCount;
     }
 
     public static int getVoidCount(ArrayList<ArrayList<Integer>> imageData) {
@@ -130,13 +133,13 @@ class Main {
         return imageData.size() * imageData.get(0).size();
     }
 
-    public static void superimposition(ArrayList<ArrayList<Integer>> imageData) {
+    public static void superimposition() {
 
-        int[][] result = new int[imageData.size()][imageData.get(0).size()];
+        int[][] result = new int[25][30];
 
         for (String file : filesList) {
             System.out.println("Reading: " + file);
-            readData(file);
+            ArrayList<ArrayList<Integer>> imageData = readData(file);
 
             int rows = imageData.size();
             for (int i = 0; i < rows; i++) {
@@ -152,20 +155,26 @@ class Main {
 
     }
 
-    public static void compare(String firstFile, String secondFile) {
+    public static int[][] compare(String firstFile, String secondFile) {
 
         ArrayList<ArrayList<Integer>> firsData = readData(firstFile);
         ArrayList<ArrayList<Integer>> secondData = readData(secondFile);
+
         int[][] result = new int[firsData.size()][firsData.get(0).size()];
 
         int firstRows = firsData.size();
         for (int i = 0; i < firstRows; i++) {
+
             ArrayList<Integer> firstFileRow = firsData.get(i);
             ArrayList<Integer> secondFileRow = secondData.get(i);
+
             int cols = firstFileRow.size();
+
             for (int j = 0; j < cols; j++) {
+
                 int a = firstFileRow.get(j);
                 int b = secondFileRow.get(j);
+
                 if (a == b) {
                     result[i][j] = 0;
                 } else {
@@ -174,36 +183,72 @@ class Main {
             }
         }
         draw(result);
+        return result;
     }
 
     public static void compareAll() {
-        System.out.println("Compare Start...");
 
         for (int i = 0; i < filesList.length - 1; i++) {
+            System.out.println("Compare Start..." + filesList[i] + " with " + filesList[i + 1]);
+            compare(filesList[i], filesList[i + 1]);
+        }
+        System.out.println("Compare END...");
+    }
+
+    public static void similarityAll() {
+
+        for (int i = 0; i < filesList.length - 1; i++) {
+            System.out.println("Compare Start..." + filesList[i] + " with " + filesList[i + 1]);
             compare(filesList[i], filesList[i + 1]);
         }
         System.out.println("Compare END...");
     }
 
     public static void similarityRatio(String firstFile, String secondFile) {
+        ArrayList<ArrayList<Integer>> firstFileData = readData(firstFile);
+        int firstFileSolidCount = getSolidCount(firstFileData);
+        int firstFileTotal = getTotalCellCount(firstFileData);
+        float ratio = (float) firstFileSolidCount / (float) firstFileTotal;
+        System.out.println(ratio);
+        System.out.println(ratio * 100);
+
+        // System.out.println(firstFileTotal);
 
     }
 
     public static void main(String args[]) {
-        System.out.println("Hello Java");
+        // System.out.println("Hello Java");
         String file = filesList[0]; // change index for file
         ArrayList<ArrayList<Integer>> data = readData(file); // create matrix
-
+        // int[][] a = {{1,2,3},{2,3,5},{1,1,1}};
+        // draw(data);
+        // System.out.println(Integer.parseInt(" 0")+ Integer.parseInt("1"));
         // animate(500);
-        int voidCount = getVoidCount(data);
-        int solidCount = getSolidCount(data);
-        int totalCellsCount = getTotalCellCount(data);
 
+        System.out.println("Question 1:");
+        int voidCount = getVoidCount(data);
         System.out.println("Void Count: " + voidCount);
+        int solidCount = getSolidCount(data);
         System.out.println("Solid Count: " + solidCount);
+        int totalCellsCount = getTotalCellCount(data);
         System.out.println("Total Count: " + totalCellsCount);
-        superimposition(data);
+        float solidRatio = (float) solidCount / (float) totalCellsCount;
+        float voidRatio = (float) voidCount / (float) totalCellsCount;
+        System.out.println("Solid Ratio: " + solidRatio);
+        System.out.println("Void Ratio: " + voidRatio);
+        System.out.println("----------------------------------------------");
+
+        System.out.println("Question 2:");
+        superimposition();
+        System.out.println("----------------------------------------------");
+
+        System.out.println("Question 3:");
         compareAll();
+
+        System.out.println("Question 4:");
+
+        similarityRatio("input01.txt", "input02.txt");
+
     }
 
 }
